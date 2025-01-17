@@ -1,0 +1,34 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Reportes de Productos</h1>
+    
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="searchInput">Buscar Producto:</label>
+            <input type="text" class="form-control" id="searchInput" placeholder="Nombre o ID del producto">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <h2 class="mt-4">Resultados de la Búsqueda</h2>
+    <table class="table table-striped" id="resultsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody id="resultsBody">
+            <!-- Aquí se llenarán los resultados -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Función para filtrar los productos
+    document.getElementById

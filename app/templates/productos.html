@@ -1,0 +1,76 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Listado de Productos</h2>
+    
+    <!-- Cuadro de Búsqueda -->
+    <div class="input-group mb-3">
+        <input type="text" id="search" class="form-control" placeholder="Buscar por nombre o descripción">
+    </div>
+
+    <!-- Botón para Agregar Producto -->
+    <div class="mb-3">
+        <a href="/productos/agregar" class="btn btn-success">Agregar Producto</a>
+    </div>
+    
+    <!-- Botones de Exportación -->
+    <div class="mb-3">
+        <button class="btn btn-secondary" onclick="exportData('pdf')">Exportar a PDF</button>
+        <button class="btn btn-secondary" onclick="exportData('xlsx')">Exportar a XLSX</button>
+        <button class="btn btn-secondary" onclick="exportData('csv')">Exportar a CSV</button>
+        <button class="btn btn-secondary" onclick="exportData('xml')">Exportar a XML</button>
+        <button class="btn btn-secondary" onclick="exportData('json')">Exportar a JSON</button>
+    </div>
+
+    <!-- Tabla de Productos -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Fecha Agregado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="productTable">
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto[0] }}</td>
+                <td>{{ producto[1] }}</td>
+                <td>{{ producto[2] }}</td>
+                <td>{{ producto[3] }}</td>
+                <td>{{ producto[4] }}</td>
+                <td>{{ producto[5] }}</td>
+                <td>
+                    <a href="/productos/editar/{{ producto[0] }}" class="btn btn-primary">Editar</a>
+                    <a href="/productos/eliminar/{{ producto[0] }}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Función para filtrar los productos
+    document.getElementById('search').addEventListener('keyup', function() {
+        let value = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#productTable tr');
+        
+        rows.forEach(row => {
+            let name = row.cells[1].textContent.toLowerCase();
+            let description = row.cells[2].textContent.toLowerCase();
+            row.style.display = (name.includes(value) || description.includes(value)) ? '' : 'none';
+        });
+    });
+
+    // Función para exportar los datos
+    function exportData(format) {
+        window.location.href = `/exportar/${format}`;
+    }
+</script>
+{% endblock %}
